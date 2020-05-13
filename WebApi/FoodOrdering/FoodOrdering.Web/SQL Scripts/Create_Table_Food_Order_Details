@@ -1,0 +1,13 @@
+
+
+CREATE TABLE Food_Store_Details
+(Store_Id int IDENTITY(200001,1) PRIMARY KEY,
+Store_Name nvarchar(255) not null,
+Location nvarchar(255) not null,
+Email nvarchar(255) not null,
+Rating int not null, 
+CHECK( Rating>0),
+Mobile_No nvarchar(13) not null,
+IsActive bit not null,
+Creation_Date date not null
+)

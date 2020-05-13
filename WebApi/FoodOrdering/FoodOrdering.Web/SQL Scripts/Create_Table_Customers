@@ -1,0 +1,17 @@
+
+Use LSJPR1_NET07_Online_Food_Ordering_Sprint_2_Team_8
+go
+
+
+CREATE TABLE Customers
+(Customer_Id int IDENTITY(400001,1) PRIMARY KEY,
+Customer_Name nvarchar(255) not null,
+Age int not null, CHECK(Age>0),
+Password nvarchar(255) not null,
+Mobile_No nvarchar(13) not null,
+Email nvarchar(255) not null, 
+City nvarchar(50) not null,
+IsActive bit not null,
+Creation_Date date not null
+)
+go

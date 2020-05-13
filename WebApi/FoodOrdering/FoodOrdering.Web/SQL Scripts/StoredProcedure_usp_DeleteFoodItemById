@@ -1,0 +1,38 @@
+USE [LSJPR1_NET07_Online_Food_Ordering_Sprint_2_Team_8]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_DeleteFoodItemById]    Script Date: 5/13/2020 8:38:10 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Virendra Pratap Singh Jhala>
+-- Create date: <13th May,2020>
+-- Description:	<This stored procedure soft deletes the existing food item by its Id i.e it sets the IsActive bit to 0>
+-- =============================================
+CREATE PROCEDURE usp_DeleteFoodItemById (@foodId int) 
+	-- Add the parameters for the stored procedure here
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+
+	if(NOT EXISTS(SELECT * FROM Food_Details WHERE Food_Id=@foodId))
+	BEGIN
+	print('Food Item to be deleted does not exists');
+	THROW 50001,'Food Item Does not exist already',1;
+	END
+
+	else
+	begin
+
+	UPDATE Food_Details 
+	SET IsActive=0
+	WHERE Food_Id=@foodId;
+
+	END
+END

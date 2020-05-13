@@ -1,0 +1,50 @@
+-- ================================================
+-- Template generated from Template Explorer using:
+-- Create Procedure (New Menu).SQL
+--
+-- Use the Specify Values for Template Parameters 
+-- command (Ctrl-Shift-M) to fill in the parameter 
+-- values below.
+--
+-- This block of comments will not be included in
+-- the definition of the procedure.
+-- ================================================
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Virendra Pratap Singh Jhala>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to insert a food item into the Food_Details table>
+-- =============================================
+-- Add the parameters for the stored procedure here
+CREATE PROCEDURE usp_AddFoodItem(@foodName nvarchar(255),@foodType nvarchar(255),@price money, @foodId int out) 
+	
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	if( NOT EXISTS(SELECT * FROM Food_Details WHERE Food_Name=@foodName and Food_Type=@foodType))
+	BEGIN
+	    
+		-- Insert statements for procedure here
+	INSERT INTO Food_Details(Food_Name,Food_Type,Price,IsActive,Creation_Date)
+	VALUES(@foodName,@foodType,@price,1,GETDATE());
+
+	SELECT @foodId=Food_Id FROM Food_Details WHERE Food_Name=@foodName and Food_Type=@foodType;
+ 
+	 END
+
+	else
+
+	BEGIN
+	print('Food Item Already exists');
+    THROW 50001,'Food Item Already exists',1;
+
+	END
+END
+GO

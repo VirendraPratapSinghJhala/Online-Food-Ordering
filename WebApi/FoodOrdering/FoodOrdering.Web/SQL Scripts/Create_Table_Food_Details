@@ -1,0 +1,11 @@
+
+CREATE TABLE Food_Details
+(Food_Id int IDENTITY(100001,1) PRIMARY KEY,
+Food_Name nvarchar(255) not null,
+Food_Type nvarchar(255) not null,
+Price money not null, 
+CHECK( Price>0),
+IsActive bit not null,
+Creation_Date date not null
+)
+go
