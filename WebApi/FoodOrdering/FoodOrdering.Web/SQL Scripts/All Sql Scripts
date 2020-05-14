@@ -23,6 +23,125 @@ go
 
 
 
+-- =============================================
+-- Author:		<Mehul Jain>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to insert a Customer into the Customers table>
+-- =============================================
+-- Add the parameters for the stored procedure here
+CREATE PROCEDURE usp_AddCustomer
+(
+@customerName nvarchar(255),
+@age int, 
+@password money,
+@mobileNo nvarchar(255), 
+@email nvarchar(255),
+@city nvarchar(50),
+@customerId int out
+) 
+	
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	if( NOT EXISTS(SELECT * FROM Customers WHERE Customer_Name=@customerName and Password=@password))
+	BEGIN
+	    
+	-- Insert statements for procedure here
+	INSERT INTO Customers(Customer_Name,Age,Password,Mobile_No,Email,City,IsActive,Creation_Date)
+	VALUES(@customerName,@age,@password,@mobileNo,@email,@city,1,GETDATE());
+
+	SELECT @customerId=Customer_Id FROM Customers WHERE Customer_Name=@customerName and Password=@password;
+ 
+	 END
+
+	else
+
+	BEGIN
+	print('Customer Already exists');
+    THROW 50001,'Customer Already exists',1;
+
+	END
+END
+GO
+
+
+-- =============================================
+-- Author:		<Mehul Jain>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to update a Customer in the Customer table>
+-- =============================================
+CREATE PROCEDURE usp_UpdateCustomer
+(
+@customerId int,
+@customerName nvarchar(255),
+@age int, 
+@password money,
+@mobileNo nvarchar(255), 
+@email nvarchar(255),
+@city nvarchar(50)
+) 
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	IF(NOT EXISTS(SELECT * From Customers WHERE Customer_Id=@customerId))
+	BEGIN
+           PRINT('Customer does not exist');
+		   THROW 50001,'Customer does not exist',1;
+	END
+
+	ELSE
+	BEGIN
+	      
+		  UPDATE Customers 
+		  SET Customer_Name=@customerName,Age=@age,Password=@password,Mobile_No=@mobileNo,Email=@email,City=@city
+		  WHERE Customer_Id=@customerId;
+
+	END
+END
+
+
+-- =============================================
+-- Author:		<Mehul Jain>
+-- Create date: <13th May,2020>
+-- Description:	<This stored procedure soft deletes the Customer by its Id i.e it sets the IsActive bit to 0>
+-- =============================================
+CREATE PROCEDURE usp_DeleteCustomerById (@customerId int) 
+	-- Add the parameters for the stored procedure here	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- statements for procedure here
+
+	if(NOT EXISTS(SELECT * FROM Customers WHERE Customer_Id=@customerId))
+	BEGIN
+	print('Customer to be deleted does not exists');
+	THROW 50001,'Customer Does not exist already',1;
+	END
+
+	else
+	begin
+
+	UPDATE Customers 
+	SET IsActive=0
+	WHERE Customer_Id=@customerId;
+
+	END
+END
+
+
+
 
 CREATE TABLE Employees
 (Employee_Id int IDENTITY(500001,1) PRIMARY KEY,
@@ -255,119 +374,3 @@ Creation_Date date not null
 )
 
 
--- =============================================
--- Author:		<Mehul Jain>
--- Create date: <13th May,2020>
--- Description:	<This is a stored procedure to insert a Customer into the Customers table>
--- =============================================
--- Add the parameters for the stored procedure here
-CREATE PROCEDURE usp_AddCustomer
-(
-@customerName nvarchar(255),
-@age int, 
-@password money,
-@mobileNo nvarchar(255), 
-@email nvarchar(255),
-@city nvarchar(50),
-@customerId int out
-) 
-	
-	
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	if( NOT EXISTS(SELECT * FROM Customers WHERE Customer_Name=@customerName and Password=@password))
-	BEGIN
-	    
-	-- Insert statements for procedure here
-	INSERT INTO Customers(Customer_Name,Age,Password,Mobile_No,Email,City,IsActive,Creation_Date)
-	VALUES(@customerName,@age,@password,@mobileNo,@email,@city,1,GETDATE());
-
-	SELECT @customerId=Customer_Id FROM Customers WHERE Customer_Name=@customerName and Password=@password;
- 
-	 END
-
-	else
-
-	BEGIN
-	print('Customer Already exists');
-    THROW 50001,'Customer Already exists',1;
-
-	END
-END
-GO
-
-
--- =============================================
--- Author:		<Mehul Jain>
--- Create date: <13th May,2020>
--- Description:	<This is a stored procedure to update a Customer in the Customer table>
--- =============================================
-CREATE PROCEDURE usp_UpdateCustomer
-(
-@customerId int,
-@customerName nvarchar(255),
-@age int, 
-@password money,
-@mobileNo nvarchar(255), 
-@email nvarchar(255),
-@city nvarchar(50)
-) 
-	
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-    -- Insert statements for procedure here
-	IF(NOT EXISTS(SELECT * From Customers WHERE Customer_Id=@customerId))
-	BEGIN
-           PRINT('Customer does not exist');
-		   THROW 50001,'Customer does not exist',1;
-	END
-
-	ELSE
-	BEGIN
-	      
-		  UPDATE Customers 
-		  SET Customer_Name=@customerName,Age=@age,Password=@password,Mobile_No=@mobileNo,Email=@email,City=@city
-		  WHERE Customer_Id=@customerId;
-
-	END
-END
-
-
--- =============================================
--- Author:		<Mehul Jain>
--- Create date: <13th May,2020>
--- Description:	<This stored procedure soft deletes the Customer by its Id i.e it sets the IsActive bit to 0>
--- =============================================
-CREATE PROCEDURE usp_DeleteCustomerById (@customerId int) 
-	-- Add the parameters for the stored procedure here	
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-    -- statements for procedure here
-
-	if(NOT EXISTS(SELECT * FROM Customers WHERE Customer_Id=@customerId))
-	BEGIN
-	print('Customer to be deleted does not exists');
-	THROW 50001,'Customer Does not exist already',1;
-	END
-
-	else
-	begin
-
-	UPDATE Customers 
-	SET IsActive=0
-	WHERE Customer_Id=@customerId;
-
-	END
-END
