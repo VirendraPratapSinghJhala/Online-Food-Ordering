@@ -1,26 +1,12 @@
-
-
 CREATE TABLE Order_Details(
 Order_Id int IDENTITY(300001,1) PRIMARY KEY,
 Order_date date not null,
 Customer_Id int,
 Store_Id int,
 Employee_Id int,
-Food_Id int,
-CONSTRAINT Fk_Customer FOREIGN KEY (Customer_Id) REFERENCES Customers(Customer_Id) 
-ON UPDATE CASCADE
-ON DELETE CASCADE,
-CONSTRAINT Fk_FoodStore FOREIGN KEY (Store_Id) REFERENCES Food_Store_Details(Store_Id)
-ON UPDATE CASCADE
-ON DELETE CASCADE,
-CONSTRAINT Fk_Employee FOREIGN KEY (Employee_Id) REFERENCES Employees(Employee_Id)
-ON UPDATE No Action
-ON DELETE No Action,
-CONSTRAINT Fk_Food FOREIGN KEY (Food_Id) REFERENCES Food_Details(Food_Id)
-ON DELETE CASCADE
-ON UPDATE CASCADE,
-Quantity int not null CHECK(Quantity>0),
-Price money not null CHECK(Price>0),
-TotalAmount money not null CHECK(TotalAmount>0),
-submitStatus bit not null
+CONSTRAINT Fk_Customer FOREIGN KEY (Customer_Id) REFERENCES Customers(Customer_Id),
+CONSTRAINT Fk_FoodStore FOREIGN KEY (Store_Id) REFERENCES Food_Store_Details(Store_Id),
+CONSTRAINT Fk_Employee FOREIGN KEY (Employee_Id) REFERENCES Employees(Employee_Id),
+submitStatus bit not null,
+isActive bit default 1 not null
 )
