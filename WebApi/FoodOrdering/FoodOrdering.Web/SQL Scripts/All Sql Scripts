@@ -302,7 +302,7 @@ GO
 -- =============================================
 
 
-CREATE TABLE Foods
+CREATE TABLE Food_Items
 (Food_Id int IDENTITY(100001,1) PRIMARY KEY,
 Food_Name nvarchar(255) not null,
 Food_Type nvarchar(255) not null,
@@ -331,7 +331,7 @@ BEGIN
 
 	SET NOCOUNT ON;
 
-	if( NOT EXISTS(SELECT * FROM Food_Details WHERE Food_Name=@foodName and Food_Type=@foodType))
+	if( NOT EXISTS(SELECT * FROM Food_Items WHERE Food_Name=@foodName and Food_Type=@foodType))
 	BEGIN
 	    
 		-- Insert statements for procedure here
@@ -339,7 +339,7 @@ BEGIN
 	INSERT INTO Food_Details(Food_Name,Food_Type,Price,IsActive,Creation_Date)
 	VALUES(@foodName,@foodType,@price,1,GETDATE());
 
-	SELECT @foodId=Food_Id FROM Food_Details WHERE Food_Name=@foodName and Food_Type=@foodType;
+	SELECT @foodId=Food_Id FROM Food_Items WHERE Food_Name=@foodName and Food_Type=@foodType;
  
 	 END
 
@@ -380,7 +380,7 @@ BEGIN
 	else
 	begin
 
-	UPDATE Food_Details 
+	UPDATE Food_Items 
 	SET IsActive=0
 	WHERE Food_Id=@foodId;
 
@@ -414,7 +414,7 @@ BEGIN
 	ELSE
 	BEGIN
 	      
-		  UPDATE Foods 
+		  UPDATE Food_Items 
 		  SET Food_Name=@foodName,Food_Type=@foodType,Price=@price
 		  WHERE Food_Id=@foodId;
 
@@ -438,42 +438,10 @@ BEGIN
 
     --sql statement for procedure here
 
-	SELECT * from Foods ;
+	SELECT * from Food_Items ;
 END
 GO
 
-
-
-
-
-
-
-
-
-CREATE TABLE Orders(
-Order_Id int IDENTITY(300001,1) PRIMARY KEY,
-Order_date date not null,
-Customer_Id int,
-Store_Id int,
-Employee_Id int,
-CONSTRAINT Fk_Customer FOREIGN KEY (Customer_Id) REFERENCES Customers(Customer_Id),
-CONSTRAINT Fk_FoodStore FOREIGN KEY (Store_Id) REFERENCES Food_Store_Details(Store_Id),
-CONSTRAINT Fk_Employee FOREIGN KEY (Employee_Id) REFERENCES Employees(Employee_Id),
-submitStatus bit not null,
-isActive bit default 1 not null,
-Creation_Date date not null
-)
-
-
-CREATE TABLE OrderedItems(
-Order_Id int,
-Food_Id int,
-Quantity int,
-CONSTRAINT Fk_FoodDetails FOREIGN KEY (Food_Id) REFERENCES Food_Details(Food_Id),
-CONSTRAINT Fk_OrderDetails FOREIGN KEY (Order_Id) REFERENCES Order_Details(Order_Id),
-isActive bit default 1 not null,
-Creation_Date date not null
-)
 
 
 -- =============================================
@@ -546,10 +514,7 @@ END
 
 -----------------------------------------------------------------------------------------------
 
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+
 -- =============================================
 -- Author:		<Kritika Arora>
 -- Create date: <14th May,2020>

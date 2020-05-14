@@ -4,8 +4,9 @@
     "\\WebApi",
     "\\WebApi\\FoodOrdering",
     "\\WebApi\\FoodOrdering\\FoodOrdering.Web",
+    "\\WebApi\\FoodOrdering\\FoodOrdering.Web\\Controllers",
     "\\WebApi\\FoodOrdering\\FoodOrdering.Web\\SQL Scripts"
   ],
-  "SelectedNode": "\\WebApi\\FoodOrdering\\FoodOrdering.Web\\SQL Scripts\\All Sql Scripts",
+  "SelectedNode": "\\WebApi\\FoodOrdering\\FoodOrdering.Web\\Controllers\\FoodController.cs",
   "PreviewInSolutionExplorer": false
 }
