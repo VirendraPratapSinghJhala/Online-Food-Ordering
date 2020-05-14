@@ -308,23 +308,7 @@ GO
 
 
 
--- =============================================
--- Author:		Kritika Arora
--- Create date: 13-May-20
--- =============================================
 
-
-CREATE TABLE FoodStores
-(Store_Id int IDENTITY(200001,1) PRIMARY KEY,
-Store_Name nvarchar(255) not null,
-Location nvarchar(255) not null,
-Email nvarchar(255) not null,
-Rating int not null, 
-CHECK( Rating>0),
-Mobile_No nvarchar(13) not null,
-IsActive bit not null,
-Creation_Date date not null
-)
 
 
 -- =============================================
@@ -333,7 +317,7 @@ Creation_Date date not null
 -- Description:	Return the food store details
 -- =============================================
 
-CREATE PROCEDURE usp_GetFoodStoreDetails 
+CREATE PROCEDURE usp_GetFoodStore 
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -342,7 +326,7 @@ BEGIN
 
     -- Sql statement for procedure here
 
-	SELECT * from FoodStores ;
+	SELECT * from Food_Stores ;
 END
 GO
 
@@ -372,5 +356,137 @@ CONSTRAINT Fk_OrderDetails FOREIGN KEY (Order_Id) REFERENCES Order_Details(Order
 isActive bit default 1 not null,
 Creation_Date date not null
 )
+
+
+
+-- =============================================
+-- Author:		<Kritika Arora>
+-- Create date: <14th May , 2020>
+-- Description:	<This is a stored procedure to update store in the Food_Store_Details table>
+-- =============================================
+CREATE PROCEDURE [dbo].[usp_EditFoodStoreDetails](@storeName nvarchar(255),@location nvarchar(255),@Email nvarchar(255),@mobileNum nvarchar(13), @rating int , @storeId int out)
+	-- Add the parameters for the stored procedure here
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	IF(NOT EXISTS(SELECT * From Food_Stores WHERE Food_Store_Id=@storeId))
+	BEGIN
+           PRINT('Store does not exist');
+		   THROW 50001,'No Stores  exist',1;
+	END
+
+	ELSE
+	BEGIN
+	      
+		  UPDATE Food_Stores
+		  SET Food_Store_Name=@storeName,Location = @location,Email = @Email, Rating=@rating,Mobile_No = @mobileNum
+		  WHERE Food_Store_Id=@storeId;
+
+	END
+END
+
+-----------------------------------------------------------------------------------------------
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Kritika Arora>
+-- Create date: <14th May,2020>
+-- Description:	<This stored procedure  deletes the existing food store details by its Id >
+-- =============================================
+CREATE PROCEDURE usp_DeleteFoodStoreById (@storeId int) 
+	-- Add the parameters for the stored procedure here
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+
+	if(NOT EXISTS(SELECT * FROM Food_Stores WHERE Food_Store_Id=@storeId))
+	BEGIN
+	print('Food Store to be deleted does not exist!!');
+	THROW 50001,'Given Food Store does not exist!!',1;
+	END
+
+	else
+	begin
+
+	UPDATE Food_Stores
+	SET IsActive=0
+	WHERE Food_Store_Id=@storeId;
+
+	END
+END
+-------------------------------------------------------------------------------------
+
+
+-- =============================================
+-- Author:		<Kritika Arora>
+-- Create date: <14th May,2020>
+-- Description:	<This is a stored procedure to insert a food item into the Food_Store_Details table>
+-- =============================================
+-- Add the parameters for the stored procedure here
+CREATE PROCEDURE usp_AddFoodStoreDetails(@storeName nvarchar(255),@location nvarchar(255),@Email nvarchar(255),@mobileNum nvarchar(13), @rating int , @storeId int out) 
+	
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	if( NOT EXISTS(SELECT * FROM Food_Stores WHERE Food_Store_Name=@storeName or Email=@Email))
+	BEGIN
+	    
+		-- Insert statements for procedure here
+	INSERT INTO Food_Stores( Food_Store_Name,Location,Email,Rating, Mobile_No,IsActive,Creation_Date)
+	VALUES(@storeName,@location,@Email,@rating,@mobileNum,1,GETDATE());
+
+	SELECT @storeId=Food_Store_Id FROM Food_Stores WHERE Food_Store_Name=@storeName or Email=@Email;
+ 
+	 END
+
+	else
+
+	BEGIN 
+	print('Food Item Already exists');
+    THROW 50001,'Food Item Already exists',1;
+
+	END
+END
+GO
+
+
+
+Create database Online_Food_Ordering_System
+
+use Online_Food_Ordering_System
+go 
+
+
+
+
+create table Food_Stores
+(Food_Store_Id int identity(200001,1) primary key ,
+Food_Store_Name nvarchar(255) not null,
+Location nvarchar(255) not null,
+Email nvarchar(255) not null,
+Rating int not null,
+check(Rating>0),
+Mobile_No nvarchar(13) not null,
+IsActive bit not null,
+Creation_Date date not null)
+
+
 
 
