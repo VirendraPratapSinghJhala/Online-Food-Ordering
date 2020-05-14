@@ -1,0 +1,38 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Subin Sunu Jacob>
+-- Create date: <13th May,2020>
+-- Description:	<This stored procedure soft deletes the existing Employee by its Id i.e it sets the IsActive bit to 0>
+-- =============================================
+CREATE PROCEDURE usp_deleteEmployee
+	-- Add the parameters for the stored procedure here
+	--input parameters for the stored procedure are declared here
+	@Employee_Id int
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	-- If employee id doesn't exist then then it throws an exception
+	If (Not Exists (SELECT * FROM Employees where Employee_Id = @Employee_Id))
+		BEGIN
+			print ('Employee Id does not Exist');
+			throw 50001,'Employee Id does not Exist',1;
+		END
+
+	-- If employee id exists then the record is soft deleted
+	ELSE 
+		BEGIN
+			 update Employees 
+			 set IsActive = 0 
+			 where Employee_Id = @Employee_Id;
+		END	
+
+END
+GO

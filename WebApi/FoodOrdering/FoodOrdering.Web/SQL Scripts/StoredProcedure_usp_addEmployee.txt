@@ -1,0 +1,48 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Subin Sunu Jacob>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to insert an employee into the Employees table>
+-- =============================================
+CREATE PROCEDURE usp_addEmployee
+	-- Add the parameters for the stored procedure here
+	--input parameters for the stored procedure are declared here
+	@Employee_Name nvarchar (255),
+	@Age int,
+	@Store_Id int,
+	@Password nvarchar (255),
+	@Mobile_No nvarchar (13),
+	@Email nvarchar (255),
+	@City nvarchar (50),
+	@IsActive bit,
+	@Employee_Id int out
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	--if employee id doesn't exist in the table then the record is added
+	If (Not Exists (SELECT * FROM Employees where Email = @Email))
+		BEGIN
+			INSERT INTO Employees 
+			(Employee_Name, Age, Store_Id, Password, Mobile_No, Email, City, IsActive, Creation_Date)
+			VALUES 
+			(@Employee_Name, @Age, @Store_Id, @Password, @Mobile_No, @Email, @City, @IsActive, GETDATE());
+
+			SELECT @Employee_Id=Employee_Id FROM Employees WHERE Email=@Email;
+		END
+	--else if employee id exists then then it throws an exception
+	ELSE
+		BEGIN
+			print('Employee email already Exists');
+			throw 50001,'Employee email already Exists',1;
+		END	
+	
+END
+GO
