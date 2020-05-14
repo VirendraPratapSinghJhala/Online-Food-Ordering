@@ -29,6 +29,7 @@ go
 -- Description:	<This is a stored procedure to insert a Customer into the Customers table>
 -- =============================================
 -- Add the parameters for the stored procedure here
+
 CREATE PROCEDURE usp_AddCustomer
 (
 @customerName nvarchar(255),
