@@ -1,9 +1,0 @@
-CREATE TABLE Order_Details_Items(
-Order_Id int,
-Food_Id int,
-Quantity int,
-CONSTRAINT Fk_FoodDetails FOREIGN KEY (Food_Id) REFERENCES Food_Details(Food_Id),
-CONSTRAINT Fk_OrderDetails FOREIGN KEY (Order_Id) REFERENCES Order_Details(Order_Id),
-isActive bit default 1 not null,
-Creation_Date date not null
-)

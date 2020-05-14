@@ -1,0 +1,251 @@
+
+
+Use Online_Food_Ordering_System
+go
+
+
+CREATE TABLE Customers
+(Customer_Id int IDENTITY(400001,1) PRIMARY KEY,
+Customer_Name nvarchar(255) not null,
+Age int not null, CHECK(Age>0),
+Password nvarchar(255) not null,
+Mobile_No nvarchar(13) not null,
+Email nvarchar(255) not null, 
+City nvarchar(50) not null,
+IsActive bit not null,
+Creation_Date date not null
+)
+go
+
+
+
+
+CREATE TABLE Employees
+(Employee_Id int IDENTITY(500001,1) PRIMARY KEY,
+Employee_Name nvarchar(255) not null,
+Age int not null, CHECK(Age>0),
+Store_Id int,
+Password nvarchar(255) not null,
+Mobile_No nvarchar(13) not null,
+Email nvarchar(255) not null, 
+City nvarchar(50) not null,
+IsActive bit not null,
+Creation_Date date not null
+CONSTRAINT Fk_Store FOREIGN KEY (Store_Id) REFERENCES Food_Store_Details(Store_Id)
+)
+go
+
+
+
+-- =============================================
+-- Author:		<Virendra Pratap Singh Jhala>
+-- Create date: <13th May,2020>
+-- =============================================
+
+
+CREATE TABLE Foods
+(Food_Id int IDENTITY(100001,1) PRIMARY KEY,
+Food_Name nvarchar(255) not null,
+Food_Type nvarchar(255) not null,
+Price money not null, 
+CHECK( Price>0),
+IsActive bit not null,
+Creation_Date date not null
+)
+go
+
+
+-- ===============================================================================================
+-- Author:		<Virendra Pratap Singh Jhala>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to insert a food item into the Foods table>
+-- ===============================================================================================
+
+
+CREATE PROCEDURE usp_AddFoodItem(@foodName nvarchar(255),@foodType nvarchar(255),@price money, @foodId int out) 
+	
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+
+	SET NOCOUNT ON;
+
+	if( NOT EXISTS(SELECT * FROM Food_Details WHERE Food_Name=@foodName and Food_Type=@foodType))
+	BEGIN
+	    
+		-- Insert statements for procedure here
+
+	INSERT INTO Food_Details(Food_Name,Food_Type,Price,IsActive,Creation_Date)
+	VALUES(@foodName,@foodType,@price,1,GETDATE());
+
+	SELECT @foodId=Food_Id FROM Food_Details WHERE Food_Name=@foodName and Food_Type=@foodType;
+ 
+	 END
+
+	else
+
+	BEGIN
+	print('Food Item Already exists');
+    THROW 50001,'Food Item Already exists',1;
+
+	END
+END
+GO
+
+
+-- =======================================================================================================================
+-- Author:		<Virendra Pratap Singh Jhala>
+-- Create date: <13th May,2020>
+-- Description:	<This stored procedure soft deletes the existing food item by its Id i.e it sets the IsActive bit to 0>
+-- -- =======================================================================================================================
+
+CREATE PROCEDURE usp_DeleteFoodItemById (@foodId int) 
+	-- Add the parameters for the stored procedure here
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+
+	if(NOT EXISTS(SELECT * FROM Food_Details WHERE Food_Id=@foodId))
+	BEGIN
+	print('Food Item to be deleted does not exists');
+	THROW 50001,'Food Item Does not exist already',1;
+	END
+
+	else
+	begin
+
+	UPDATE Food_Details 
+	SET IsActive=0
+	WHERE Food_Id=@foodId;
+
+	END
+END
+
+
+
+-- ======================================================================================================
+-- Author:		<Virendra Pratap Singh Jhala>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to update a food item in the Foods table>
+-- ======================================================================================================
+
+CREATE PROCEDURE usp_UpdateFoodItem(@foodId int, @foodName nvarchar(255), @foodType nvarchar(255), @price money)
+	-- Add the parameters for the stored procedure here
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	IF(NOT EXISTS(SELECT * From Food_Details WHERE Food_Id=@foodId))
+	BEGIN
+           PRINT('Food Item does not exist');
+		   THROW 50001,'Food Item does not exist',1;
+	END
+
+	ELSE
+	BEGIN
+	      
+		  UPDATE Foods 
+		  SET Food_Name=@foodName,Food_Type=@foodType,Price=@price
+		  WHERE Food_Id=@foodId;
+
+	END
+END
+
+
+
+
+-- ================================================================
+-- Author:		Virendra Pratap Singh Jhala
+-- Create date: 13-May-20
+-- Description:	Return the food details from Foods table
+-- ================================================================
+CREATE PROCEDURE usp_GetFoodItemDetails 
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    --sql statement for procedure here
+
+	SELECT * from Foods ;
+END
+GO
+
+
+
+-- =============================================
+-- Author:		Kritika Arora
+-- Create date: 13-May-20
+-- =============================================
+
+
+CREATE TABLE FoodStores
+(Store_Id int IDENTITY(200001,1) PRIMARY KEY,
+Store_Name nvarchar(255) not null,
+Location nvarchar(255) not null,
+Email nvarchar(255) not null,
+Rating int not null, 
+CHECK( Rating>0),
+Mobile_No nvarchar(13) not null,
+IsActive bit not null,
+Creation_Date date not null
+)
+
+
+-- =============================================
+-- Author:		Kritika Arora
+-- Create date: 13-May-20
+-- Description:	Return the food store details
+-- =============================================
+
+CREATE PROCEDURE usp_GetFoodStoreDetails 
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Sql statement for procedure here
+
+	SELECT * from FoodStores ;
+END
+GO
+
+
+
+CREATE TABLE Orders(
+Order_Id int IDENTITY(300001,1) PRIMARY KEY,
+Order_date date not null,
+Customer_Id int,
+Store_Id int,
+Employee_Id int,
+CONSTRAINT Fk_Customer FOREIGN KEY (Customer_Id) REFERENCES Customers(Customer_Id),
+CONSTRAINT Fk_FoodStore FOREIGN KEY (Store_Id) REFERENCES Food_Store_Details(Store_Id),
+CONSTRAINT Fk_Employee FOREIGN KEY (Employee_Id) REFERENCES Employees(Employee_Id),
+submitStatus bit not null,
+isActive bit default 1 not null,
+Creation_Date date not null
+)
+
+
+CREATE TABLE OrderedItems(
+Order_Id int,
+Food_Id int,
+Quantity int,
+CONSTRAINT Fk_FoodDetails FOREIGN KEY (Food_Id) REFERENCES Food_Details(Food_Id),
+CONSTRAINT Fk_OrderDetails FOREIGN KEY (Order_Id) REFERENCES Order_Details(Order_Id),
+isActive bit default 1 not null,
+Creation_Date date not null
+)
