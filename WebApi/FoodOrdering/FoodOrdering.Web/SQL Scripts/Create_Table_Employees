@@ -1,3 +1,7 @@
+-- Author:		<Subin Sunu Jacob>
+-- Create date: <13th May,2020>
+-- Description:	<This is to create an Employees table>
+
 
 CREATE TABLE Employees
 (Employee_Id int IDENTITY(500001,1) PRIMARY KEY,
@@ -11,7 +15,5 @@ City nvarchar(50) not null,
 IsActive bit not null,
 Creation_Date date not null
 CONSTRAINT Fk_Store FOREIGN KEY (Store_Id) REFERENCES Food_Store_Details(Store_Id)
-ON UPDATE CASCADE
-ON DELETE CASCADE
 )
 go

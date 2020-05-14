@@ -1,0 +1,52 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Subin Sunu Jacob>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to update an Employee in the Employees table>
+-- =============================================
+CREATE PROCEDURE usp_updateEmployee
+	-- Add the parameters for the stored procedure here
+	--input parameters for the stored procedure are declared here
+	@Employee_Id int,
+	@Employee_Name nvarchar (255),
+	@Age int,
+	@Store_Id int,
+	@Password nvarchar (255),
+	@Mobile_No nvarchar (13),
+	@Email nvarchar (255),
+	@City nvarchar (50),
+	@IsActive bit,
+	@Creation_Date date
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	-- if employee id doesn't exists then then it throws an exception
+	If (Not Exists (SELECT * FROM Employees where Employee_Id = @Employee_Id))
+		BEGIN
+			print ('Employee Id does not Exist');
+ 			throw 50001,'Employee Id does not Exist',1;
+		END
+	-- else if employee id exist in the table then the record is updated
+	ELSE
+		BEGIN
+			UPDATE Employees  
+			SET    Employee_Name = @Employee_Name,  
+                   Age = @Age,  
+                   Store_Id = @Store_Id,  
+                   Password = @Password,  
+				   Mobile_No = @Mobile_No,
+				   Email = @Email,
+				   City = @City,
+				   IsActive = @IsActive,
+				   Creation_Date = @Creation_Date
+            WHERE  Employee_Id = @Employee_Id ;
+		END	
+END
+GO
