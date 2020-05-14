@@ -620,6 +620,248 @@ BEGIN
 END
 GO
 
+--------------ORDERS---------------
+
+CREATE TABLE Orders(
+Order_Id int IDENTITY(300001,1) PRIMARY KEY,
+Customer_Id int not null,
+CONSTRAINT Fk_Customer FOREIGN KEY (Customer_Id) REFERENCES Customers(Customer_Id),
+Submit_Status bit not null,
+--------------------------after submit
+Order_date date,
+Total_Quantity integer,
+Total_Price integer,
+--------------------------admin
+Store_Id int,
+CONSTRAINT Fk_FoodStore FOREIGN KEY (Food_Store_Id) REFERENCES Food_Stores(Food_Store_Id),
+Employee_Id int,
+CONSTRAINT Fk_Employee FOREIGN KEY (Employee_Id) REFERENCES Employees(Employee_Id),
+-------------------------------------------------------------------------------------------
+isActive bit default 1 not null,
+Creation_Date date not null
+);
+
+-- =============================================
+-- Author:		<Prateek Joshi>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to insert an order into the Orders table>
+-- =============================================
+-- Add the parameters for the stored procedure here
+CREATE PROCEDURE usp_AddOrder
+(
+@customerId int,
+@orderId int out
+)
+	
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	if( NOT EXISTS(SELECT * FROM Customers WHERE Customer_Id=@customerId))
+	BEGIN
+	    
+	-- Insert statements for procedure here
+	INSERT INTO Customers(Customer_Name,Age,Password,Mobile_No,Email,City,IsActive,Creation_Date)
+	VALUES(@customerName,@age,@password,@mobileNo,@email,@city,1,GETDATE());
+	insert into order_details values(GETDATE(), 400001, 200001, 500001, 1, 1)
+	SELECT @customerId=Customer_Id FROM Customers WHERE Customer_Name=@customerName and Password=@password;
+ 
+	 END
+
+	else
+
+	BEGIN
+	print('Customer Does Not exist');
+    THROW 50001,'Customer Does Not exist',1;
+
+	END
+END
+GO
+
+
+-- =============================================
+-- Author:		<Prateek Joshi>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to update an order into the Orders table>
+-- =============================================
+CREATE PROCEDURE usp_UpdateOrder
+(
+@orderId int,
+@submitStatus bit,
+--------------------------admin
+@foodStoreId int,
+@employeeId int
+) 
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	IF(NOT EXISTS(SELECT * FROM Orders WHERE Order_Id=@orderId))
+	BEGIN
+	   PRINT('Order does not exist');
+	   THROW 50001,'Order does not exist',1;
+	END
+	ELSE
+	BEGIN
+		IF(@foodStoreId != null OR @employeeId != null)
+		BEGIN
+			UPDATE Orders 
+			SET Food_store_id=@foodStoreId, Employee_Id=@employeeId
+			WHERE Customer_Id=@customerId;
+		END
+
+		ELSE
+		BEGIN
+			IF(@submitStatus!=null)
+			BEGIN
+				UPDATE Orders 
+				SET Submit_status=@submitStatus, 
+				--Total_Quantity integer,			TO UPDATE IN THE PROC
+				--Total_Price integer,
+				WHERE Order_Id=@orderId;
+			END
+			ELSE
+			BEGIN
+			   PRINT('Inadequeate parameters');
+			   THROW 50001,'Inadequate parameters',1;
+			END
+		END
+	END
+END
+GO
+
+-- =============================================
+-- Author:		<Prateek Joshi>
+-- Create date: <13th May,2020>
+-- Description:	<This stored procedure soft deletes the Order by its Id i.e it sets the IsActive bit to 0>
+-- =============================================
+CREATE PROCEDURE usp_DeleteOrderById (@orderId int) 
+	-- Add the parameters for the stored procedure here	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- statements for procedure here
+
+	if(NOT EXISTS(SELECT * FROM Orders WHERE Order_Id=@orderId))
+	BEGIN
+	print('Order to be deleted does not exist');
+	THROW 50001,'Order does not exist',1;
+	END
+
+	ELSE
+	BEGIN
+	UPDATE Orders 
+	SET IsActive=0
+	WHERE order_Id=@orderId;
+	END
+END
+GO
+
+--------------ORDER_ITEMS---------------
+
+CREATE TABLE Order_Items(
+Order_Item_Id int IDENTITY(700001,1) PRIMARY KEY,
+Order_Id int,
+CONSTRAINT Fk_Orders FOREIGN KEY (Order_Id) REFERENCES Orders(Order_Id),
+Food_Item_Id int,
+CONSTRAINT Fk_Food_Items FOREIGN KEY (Food_Item_Id) REFERENCES Food_Items(Food_Item_Id),
+Price money,
+Quantity int,
+Creation_Date date not null
+);
+
+-- =============================================
+-- Author:		<Prateek Joshi>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to insert an Order Item into the Order_Items table>
+-- =============================================
+-- Add the parameters for the stored procedure here
+CREATE PROCEDURE usp_AddOrderItem
+(
+@orderId int,
+@foodItemId int,
+@price money,
+@quantity int
+) 
+	
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	if(EXISTS(SELECT * FROM Food_Items WHERE Food_Item_Id=@foodItemId))
+	BEGIN
+	    
+	-- Insert statements for procedure here
+	INSERT INTO Order_Items(Order_Id, Food_Item_Id, Price, Quantity, Creation_Date)
+	VALUES(@orderId, @foodItemId, @price, @quantity, GETDATE());
+ 
+	 END
+
+	else
+
+	BEGIN
+	print('Food Item does not exist');
+    THROW 50001,'Food Item does not exist',1;
+
+	END
+END
+GO
+
+
+-- =============================================
+-- Author:		<Prateek Joshi>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to update an Order Item into the Order_Items table>
+-- =============================================
+CREATE PROCEDURE usp_UpdateCustomer
+(
+	@orderId int,
+	@foodItemId int,
+	@quantity int
+) 
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	IF(NOT EXISTS(SELECT * From Order_Items WHERE Order_Id=@orderId))
+	BEGIN
+           PRINT('Order ID does not exist');
+		   THROW 50001,'Order ID does not exist',1;
+	END
+
+	ELSE
+	BEGIN
+		    IF (@quantity != 0)
+			BEGIN
+			  UPDATE Order_Items 
+			  SET Quantity=@quantity
+			  WHERE Order_Id=@orderId AND Food_Item_Id=@foodItemId;
+			END
+			ELSE
+			BEGIN
+				DELETE FROM Order_Items
+				WHERE Order_Id=@orderId AND Food_Item_Id=@foodItemId;
+			END
+	END
+END
+GO
 
 
  
