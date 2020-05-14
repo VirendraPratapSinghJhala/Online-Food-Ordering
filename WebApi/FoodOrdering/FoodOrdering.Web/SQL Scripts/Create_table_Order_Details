@@ -8,5 +8,6 @@ CONSTRAINT Fk_Customer FOREIGN KEY (Customer_Id) REFERENCES Customers(Customer_I
 CONSTRAINT Fk_FoodStore FOREIGN KEY (Store_Id) REFERENCES Food_Store_Details(Store_Id),
 CONSTRAINT Fk_Employee FOREIGN KEY (Employee_Id) REFERENCES Employees(Employee_Id),
 submitStatus bit not null,
-isActive bit default 1 not null
+isActive bit default 1 not null,
+Creation_Date date not null
 )
