@@ -6,6 +6,6 @@
     "\\WebApi\\FoodOrdering\\FoodOrdering.Web",
     "\\WebApi\\FoodOrdering\\FoodOrdering.Web\\SQL Scripts"
   ],
-  "SelectedNode": "\\WebApi\\FoodOrdering\\FoodOrdering.Web\\SQL Scripts\\Create_Table_Customers",
+  "SelectedNode": "\\WebApi\\FoodOrdering\\FoodOrdering.Web\\obj",
   "PreviewInSolutionExplorer": false
 }
