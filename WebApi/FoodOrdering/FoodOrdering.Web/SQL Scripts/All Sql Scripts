@@ -142,7 +142,10 @@ BEGIN
 END
 
 
-
+-- =============================================
+-- Author:		<Subin Sunu Jacob>
+-- Create date: <13th May,2020>
+-- =============================================
 
 CREATE TABLE Employees
 (Employee_Id int IDENTITY(500001,1) PRIMARY KEY,
@@ -158,6 +161,138 @@ Creation_Date date not null
 CONSTRAINT Fk_Store FOREIGN KEY (Store_Id) REFERENCES Food_Store_Details(Store_Id)
 )
 go
+
+
+
+-- =============================================
+-- Author:		<Subin Sunu Jacob>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to update an Employee in the Employees table>
+-- =============================================
+CREATE PROCEDURE usp_updateEmployee
+	-- Add the parameters for the stored procedure here
+	--input parameters for the stored procedure are declared here
+	@Employee_Id int,
+	@Employee_Name nvarchar (255),
+	@Age int,
+	@Store_Id int,
+	@Password nvarchar (255),
+	@Mobile_No nvarchar (13),
+	@Email nvarchar (255),
+	@City nvarchar (50),
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	-- if employee id doesn't exists then then it throws an exception
+	If (Not Exists (SELECT * FROM Employees where Employee_Id = @Employee_Id))
+		BEGIN
+			print ('Employee Id does not Exist');
+ 			throw 50001,'Employee Id does not Exist',1;
+		END
+	-- else if employee id exist in the table then the record is updated
+	ELSE
+		BEGIN
+			UPDATE Employees  
+			SET    Employee_Name = @Employee_Name,  
+                   Age = @Age,  
+                   Store_Id = @Store_Id,  
+                   Password = @Password,  
+				   Mobile_No = @Mobile_No,
+				   Email = @Email,
+				   City = @City,
+            WHERE  Employee_Id = @Employee_Id ;
+		END	
+END
+GO
+
+
+-- =============================================
+-- Author:		<Subin Sunu Jacob>
+-- Create date: <13th May,2020>
+-- Description:	<This stored procedure soft deletes the existing Employee by its Id i.e it sets the IsActive bit to 0>
+-- =============================================
+CREATE PROCEDURE usp_deleteEmployee
+	-- Add the parameters for the stored procedure here
+	--input parameters for the stored procedure are declared here
+	@Employee_Id int
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	-- If employee id doesn't exist then then it throws an exception
+	If (Not Exists (SELECT * FROM Employees where Employee_Id = @Employee_Id))
+		BEGIN
+			print ('Employee Id does not Exist');
+			throw 50001,'Employee Id does not Exist',1;
+		END
+
+	-- If employee id exists then the record is soft deleted
+	ELSE 
+		BEGIN
+			 update Employees 
+			 set IsActive = 0 
+			 where Employee_Id = @Employee_Id;
+		END	
+
+END
+GO
+
+
+-- =============================================
+-- Author:		<Subin Sunu Jacob>
+-- Create date: <13th May,2020>
+-- Description:	<This is a stored procedure to insert an employee into the Employees table>
+-- =============================================
+
+CREATE PROCEDURE usp_AddEmployee
+	-- Add the parameters for the stored procedure here
+	--input parameters for the stored procedure are declared here
+	@Employee_Name nvarchar (255),
+	@Age int,
+	@Store_Id int,
+	@Password nvarchar (255),
+	@Mobile_No nvarchar (13),
+	@Email nvarchar (255),
+	@City nvarchar (50),
+	@Employee_Id int out
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	--if employee id doesn't exist in the table then the record is added
+	If (Not Exists (SELECT * FROM Employees where Email = @Email))
+		BEGIN
+			INSERT INTO Employees 
+			(Employee_Name, Age, Store_Id, Password, Mobile_No, Email, City, IsActive, Creation_Date)
+			VALUES 
+			(@Employee_Name, @Age, @Store_Id, @Password, @Mobile_No, @Email, @City, 1, GETDATE());
+
+			SELECT @Employee_Id=Employee_Id FROM Employees WHERE Email=@Email;
+		END
+	--else if employee id exists then then it throws an exception
+	ELSE
+		BEGIN
+			print('Employee email already Exists');
+			throw 50001,'Employee email already Exists',1;
+		END	
+	
+END
+GO
+
+
+
 
 
 
@@ -312,24 +447,6 @@ GO
 
 
 
--- =============================================
--- Author:		Kritika Arora
--- Create date: 13-May-20
--- Description:	Return the food store details
--- =============================================
-
-CREATE PROCEDURE usp_GetFoodStore 
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-    -- Sql statement for procedure here
-
-	SELECT * from Food_Stores ;
-END
-GO
 
 
 
@@ -358,6 +475,42 @@ isActive bit default 1 not null,
 Creation_Date date not null
 )
 
+
+-- =============================================
+Author:		<Kritika Arora>
+Create date: <14th May,2020>
+-- =============================================
+
+create table Food_Stores
+(Food_Store_Id int identity(200001,1) primary key ,
+Food_Store_Name nvarchar(255) not null,
+Location nvarchar(255) not null,
+Email nvarchar(255) not null,
+Rating int not null,
+check(Rating>0),
+Mobile_No nvarchar(13) not null,
+IsActive bit not null,
+Creation_Date date not null)
+
+
+-- =============================================
+-- Author:		Kritika Arora
+-- Create date: 14-May-20
+-- Description:	Return the food store details
+-- =============================================
+
+CREATE PROCEDURE usp_GetFoodStore 
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Sql statement for procedure here
+
+	SELECT * from Food_Stores ;
+END
+GO
 
 
 -- =============================================
@@ -469,25 +622,7 @@ GO
 
 
 
-Create database Online_Food_Ordering_System
-
-use Online_Food_Ordering_System
-go 
-
-
-
-
-create table Food_Stores
-(Food_Store_Id int identity(200001,1) primary key ,
-Food_Store_Name nvarchar(255) not null,
-Location nvarchar(255) not null,
-Email nvarchar(255) not null,
-Rating int not null,
-check(Rating>0),
-Mobile_No nvarchar(13) not null,
-IsActive bit not null,
-Creation_Date date not null)
-
+ 
 
 
 
