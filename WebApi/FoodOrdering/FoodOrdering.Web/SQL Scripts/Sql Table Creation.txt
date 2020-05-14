@@ -1,0 +1,102 @@
+
+
+Use Online_food_Ordering_System
+go
+
+
+CREATE TABLE Customers
+(Customer_Id int IDENTITY(400001,1) PRIMARY KEY,
+Customer_Name nvarchar(255) not null,
+Age int not null, CHECK(Age>0),
+Password nvarchar(255) not null,
+Mobile_No nvarchar(13) not null,
+Email nvarchar(255) not null, 
+City nvarchar(50) not null,
+IsActive bit not null,
+Creation_Date date not null
+)
+go
+
+
+CREATE TABLE Employees
+(Employee_Id int IDENTITY(500001,1) PRIMARY KEY,
+Employee_Name nvarchar(255) not null,
+Age int not null, CHECK(Age>0),
+Store_Id int,
+Password nvarchar(255) not null,
+Mobile_No nvarchar(13) not null,
+Email nvarchar(255) not null, 
+City nvarchar(50) not null,
+IsActive bit not null,
+Creation_Date date not null
+CONSTRAINT Fk_Store FOREIGN KEY (Store_Id) REFERENCES Food_Stores(Food_Store_Id)
+)
+go
+
+
+
+CREATE TABLE Food_Items
+(Food_Item_Id int IDENTITY(100001,1) PRIMARY KEY,
+Food_Name nvarchar(255) not null,
+Food_Type nvarchar(255) not null,
+Price money not null, 
+CHECK( Price>0),
+IsActive bit not null,
+Creation_Date date not null
+)
+go
+
+create table Food_Stores
+(Food_Store_Id int identity(200001,1) primary key ,
+Food_Store_Name nvarchar(255) not null,
+Location nvarchar(255) not null,
+Email nvarchar(255) not null,
+Rating int not null,
+check(Rating>0),
+Mobile_No nvarchar(13) not null,
+IsActive bit not null,
+Creation_Date date not null)
+
+
+CREATE TABLE Orders(
+Order_Id int IDENTITY(300001,1) PRIMARY KEY,
+Customer_Id int not null,
+CONSTRAINT Fk_Customer FOREIGN KEY (Customer_Id) REFERENCES Customers(Customer_Id),
+Submit_Status bit not null,
+--------------------------after submit
+Order_date date,
+Total_Quantity integer,
+Total_Price integer,
+--------------------------admin
+Food_Store_Id int,
+CONSTRAINT Fk_FoodStore FOREIGN KEY (Food_Store_Id) REFERENCES Food_Stores(Food_Store_Id),
+Employee_Id int,
+CONSTRAINT Fk_Employee FOREIGN KEY (Employee_Id) REFERENCES Employees(Employee_Id),
+-------------------------------------------------------------------------------------------
+isActive bit default 1 not null,
+Creation_Date date not null
+)
+
+
+
+CREATE TABLE Order_Items(
+Order_Item_Id int IDENTITY(700001,1) PRIMARY KEY,
+Order_Id int,
+CONSTRAINT Fk_Orders FOREIGN KEY (Order_Id) REFERENCES Orders(Order_Id),
+Food_Item_Id int,
+CONSTRAINT Fk_Food_Items FOREIGN KEY (Food_Item_Id) REFERENCES Food_Items(Food_Item_Id),
+Price money,
+Quantity int,
+Creation_Date date not null
+);
+
+
+
+
+
+
+
+
+
+
+
