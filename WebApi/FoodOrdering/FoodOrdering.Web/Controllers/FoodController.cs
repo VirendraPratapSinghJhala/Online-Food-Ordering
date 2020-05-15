@@ -41,7 +41,92 @@ namespace FoodOrdering.Web.Controllers
                 throw new FoodOrderException("The entered details to fetch the Food Items are not valid");
             }
         }
-          
+
+
+        public Food_Item GetFoodItemById(int Food_Item_Id)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //instantiate FoodService class
+                    FoodService fs = new FoodService();
+
+                    //Call GetAllFoodItems() to fetch all Food Items 
+                    Food_Item foodItem = fs.GetFoodItemById(Food_Item_Id);
+
+                    //return the response
+                    return foodItem;
+                }
+                catch (FoodOrderException)
+                {
+                    throw;
+                }
+            }
+
+            else
+            {
+                //throw user defined exception object 
+                throw new FoodOrderException("The entered details to fetch the Food Items are not valid");
+            }
+        }
+
+
+        public List<Food_Item> GetAllFoodItems()
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //instantiate FoodService class
+                    FoodService fs = new FoodService();
+
+                    //Call GetAllFoodItems() to fetch all Food Items 
+                    List<Food_Item> foodItemsList = fs.GetAllFoodItems();
+
+                    //return the response
+                    return foodItemsList;
+                }
+                catch (FoodOrderException)
+                {
+                    throw;
+                }
+            }
+
+            else
+            {
+                //throw user defined exception object 
+                throw new FoodOrderException("The entered details to fetch the Food Items are not valid");
+            }
+        }
+
+        public List<Food_Item> GetAllFoodItems()
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //instantiate FoodService class
+                    FoodService fs = new FoodService();
+
+                    //Call GetAllFoodItems() to fetch all Food Items 
+                    List<Food_Item> foodItemsList = fs.GetAllFoodItems();
+
+                    //return the response
+                    return foodItemsList;
+                }
+                catch (FoodOrderException)
+                {
+                    throw;
+                }
+            }
+
+            else
+            {
+                //throw user defined exception object 
+                throw new FoodOrderException("The entered details to fetch the Food Items are not valid");
+            }
+        }
 
     }
 }
