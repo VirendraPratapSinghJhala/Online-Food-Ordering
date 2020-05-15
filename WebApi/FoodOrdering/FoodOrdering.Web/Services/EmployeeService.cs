@@ -10,10 +10,15 @@ namespace FoodOrdering.Web.Services
     {
         public bool AddEmployee()
         {
-            using ()
+            using (Online_Food_Ordering_SystemEntities db = new Online_Food_Ordering_SystemEntities())
             { 
 
             }
+        }
+
+        public bool DeleteEmployee(int empId)
+        {
+
         }
     }
 }
