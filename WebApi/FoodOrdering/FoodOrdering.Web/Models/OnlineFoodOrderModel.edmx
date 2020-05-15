@@ -329,7 +329,7 @@
           <NavigationProperty Name="Orders" Relationship="Self.Fk_Employee" FromRole="Employees" ToRole="Orders" />
           <NavigationProperty Name="Food_Stores" Relationship="Self.Fk_Store" FromRole="Employees" ToRole="Food_Stores" />
         </EntityType>
-        <EntityType Name="Food_Items">
+        <EntityType Name="Food_Item">
           <Key>
             <PropertyRef Name="Food_Item_Id" />
           </Key>
@@ -341,7 +341,7 @@
           <Property Name="Creation_Date" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Order_Items" Relationship="Self.Fk_Food_Items" FromRole="Food_Items" ToRole="Order_Items" />
         </EntityType>
-        <EntityType Name="Food_Stores">
+        <EntityType Name="Food_Store">
           <Key>
             <PropertyRef Name="Food_Store_Id" />
           </Key>
@@ -356,7 +356,7 @@
           <NavigationProperty Name="Employees" Relationship="Self.Fk_Store" FromRole="Food_Stores" ToRole="Employees" />
           <NavigationProperty Name="Orders" Relationship="Self.Fk_FoodStore" FromRole="Food_Stores" ToRole="Orders" />
         </EntityType>
-        <EntityType Name="Order_Items">
+        <EntityType Name="Order_Item">
           <Key>
             <PropertyRef Name="Order_Item_Id" />
           </Key>
@@ -413,7 +413,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Fk_Store">
-          <End Role="Food_Stores" Type="Self.Food_Stores" Multiplicity="0..1" />
+          <End Role="Food_Stores" Type="Online_Food_Ordering_SystemModel.Food_Store" Multiplicity="0..1" />
           <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Food_Stores">
@@ -425,8 +425,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Fk_Food_Items">
-          <End Role="Food_Items" Type="Self.Food_Items" Multiplicity="0..1" />
-          <End Role="Order_Items" Type="Self.Order_Items" Multiplicity="*" />
+          <End Role="Food_Items" Type="Online_Food_Ordering_SystemModel.Food_Item" Multiplicity="0..1" />
+          <End Role="Order_Items" Type="Online_Food_Ordering_SystemModel.Order_Item" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Food_Items">
               <PropertyRef Name="Food_Item_Id" />
@@ -437,7 +437,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Fk_FoodStore">
-          <End Role="Food_Stores" Type="Self.Food_Stores" Multiplicity="0..1" />
+          <End Role="Food_Stores" Type="Online_Food_Ordering_SystemModel.Food_Store" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Food_Stores">
@@ -450,7 +450,7 @@
         </Association>
         <Association Name="Fk_Orders">
           <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
-          <End Role="Order_Items" Type="Self.Order_Items" Multiplicity="*" />
+          <End Role="Order_Items" Type="Online_Food_Ordering_SystemModel.Order_Item" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
               <PropertyRef Name="Order_Id" />
@@ -463,9 +463,9 @@
         <EntityContainer Name="Online_Food_Ordering_SystemEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
-          <EntitySet Name="Food_Items" EntityType="Self.Food_Items" />
-          <EntitySet Name="Food_Stores" EntityType="Self.Food_Stores" />
-          <EntitySet Name="Order_Items" EntityType="Self.Order_Items" />
+          <EntitySet Name="Food_Items" EntityType="Online_Food_Ordering_SystemModel.Food_Item" />
+          <EntitySet Name="Food_Stores" EntityType="Online_Food_Ordering_SystemModel.Food_Store" />
+          <EntitySet Name="Order_Items" EntityType="Online_Food_Ordering_SystemModel.Order_Item" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <AssociationSet Name="Fk_Customer" Association="Self.Fk_Customer">
             <End Role="Customers" EntitySet="Customers" />
@@ -652,7 +652,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Food_Items">
-            <EntityTypeMapping TypeName="Online_Food_Ordering_SystemModel.Food_Items">
+            <EntityTypeMapping TypeName="Online_Food_Ordering_SystemModel.Food_Item">
               <MappingFragment StoreEntitySet="Food_Items">
                 <ScalarProperty Name="Food_Item_Id" ColumnName="Food_Item_Id" />
                 <ScalarProperty Name="Food_Name" ColumnName="Food_Name" />
@@ -664,7 +664,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Food_Stores">
-            <EntityTypeMapping TypeName="Online_Food_Ordering_SystemModel.Food_Stores">
+            <EntityTypeMapping TypeName="Online_Food_Ordering_SystemModel.Food_Store">
               <MappingFragment StoreEntitySet="Food_Stores">
                 <ScalarProperty Name="Food_Store_Id" ColumnName="Food_Store_Id" />
                 <ScalarProperty Name="Food_Store_Name" ColumnName="Food_Store_Name" />
@@ -678,7 +678,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Order_Items">
-            <EntityTypeMapping TypeName="Online_Food_Ordering_SystemModel.Order_Items">
+            <EntityTypeMapping TypeName="Online_Food_Ordering_SystemModel.Order_Item">
               <MappingFragment StoreEntitySet="Order_Items">
                 <ScalarProperty Name="Order_Item_Id" ColumnName="Order_Item_Id" />
                 <ScalarProperty Name="Order_Id" ColumnName="Order_Id" />

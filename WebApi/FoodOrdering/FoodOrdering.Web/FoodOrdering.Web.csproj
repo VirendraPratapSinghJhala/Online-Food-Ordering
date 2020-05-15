@@ -135,10 +135,10 @@
     <Compile Include="Models\Employee.cs">
       <DependentUpon>OnlineFoodOrderModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Food_Items.cs">
+    <Compile Include="Models\Food_Item.cs">
       <DependentUpon>OnlineFoodOrderModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Food_Stores.cs">
+    <Compile Include="Models\Food_Store.cs">
       <DependentUpon>OnlineFoodOrderModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OnlineFoodOrderModel.Context.cs">
@@ -159,7 +159,7 @@
     <Compile Include="Models\Order.cs">
       <DependentUpon>OnlineFoodOrderModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Order_Items.cs">
+    <Compile Include="Models\Order_Item.cs">
       <DependentUpon>OnlineFoodOrderModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\usp_GetFoodItemDetails_Result.cs">

@@ -8,7 +8,7 @@ using System.Web;
 namespace FoodOrdering.Web.Models
 {
 
-    public interface IFood_Items
+    public interface IFood_Item
     {
         
          int Food_Item_Id { get; set; }
@@ -31,8 +31,8 @@ namespace FoodOrdering.Web.Models
         System.DateTime Creation_Date { get; set; }
     }
 
-    [MetadataType(typeof(IFood_Items))]
-    public partial class Food_Items
+    [MetadataType(typeof(IFood_Item))]
+    public partial class Food_Item
     {
 
        

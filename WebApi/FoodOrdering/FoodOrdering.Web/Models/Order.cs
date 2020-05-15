@@ -17,7 +17,7 @@ namespace FoodOrdering.Web.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Order()
         {
-            this.Order_Items = new HashSet<Order_Items>();
+            this.Order_Items = new HashSet<Order_Item>();
         }
     
         public int Order_Id { get; set; }
@@ -33,8 +33,8 @@ namespace FoodOrdering.Web.Models
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
-        public virtual Food_Stores Food_Stores { get; set; }
+        public virtual Food_Store Food_Stores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order_Items> Order_Items { get; set; }
+        public virtual ICollection<Order_Item> Order_Items { get; set; }
     }
 }

@@ -29,9 +29,9 @@ namespace FoodOrdering.Web.Models
     
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<Food_Items> Food_Items { get; set; }
-        public virtual DbSet<Food_Stores> Food_Stores { get; set; }
-        public virtual DbSet<Order_Items> Order_Items { get; set; }
+        public virtual DbSet<Food_Item> Food_Items { get; set; }
+        public virtual DbSet<Food_Store> Food_Stores { get; set; }
+        public virtual DbSet<Order_Item> Order_Items { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
     
         public virtual int usp_AddCustomer(string customerName, Nullable<int> age, string password, string mobileNo, string email, string city, ObjectParameter customerId)
