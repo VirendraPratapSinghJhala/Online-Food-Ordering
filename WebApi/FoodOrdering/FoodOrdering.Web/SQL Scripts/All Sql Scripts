@@ -169,7 +169,7 @@ go
 -- Create date: <13th May,2020>
 -- Description:	<This is a stored procedure to update an Employee in the Employees table>
 -- =============================================
-CREATE PROCEDURE usp_updateEmployee
+CREATE PROCEDURE usp_UpdateEmployee
 	-- Add the parameters for the stored procedure here
 	--input parameters for the stored procedure are declared here
 	@Employee_Id int,
@@ -215,7 +215,7 @@ GO
 -- Create date: <13th May,2020>
 -- Description:	<This stored procedure soft deletes the existing Employee by its Id i.e it sets the IsActive bit to 0>
 -- =============================================
-CREATE PROCEDURE usp_deleteEmployee
+CREATE PROCEDURE usp_DeleteEmployee
 	-- Add the parameters for the stored procedure here
 	--input parameters for the stored procedure are declared here
 	@Employee_Id int
