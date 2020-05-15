@@ -156,6 +156,110 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="usp_AddCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="customerName" Type="nvarchar" Mode="In" />
+          <Parameter Name="age" Type="int" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="mobileNo" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="city" Type="nvarchar" Mode="In" />
+          <Parameter Name="customerId" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="usp_AddEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Employee_Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Age" Type="int" Mode="In" />
+          <Parameter Name="Store_Id" Type="int" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar" Mode="In" />
+          <Parameter Name="Mobile_No" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="City" Type="nvarchar" Mode="In" />
+          <Parameter Name="Employee_Id" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="usp_AddFoodItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="foodName" Type="nvarchar" Mode="In" />
+          <Parameter Name="foodType" Type="nvarchar" Mode="In" />
+          <Parameter Name="price" Type="money" Mode="In" />
+          <Parameter Name="foodId" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="usp_AddFoodStoreDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="storeName" Type="nvarchar" Mode="In" />
+          <Parameter Name="location" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="mobileNum" Type="nvarchar" Mode="In" />
+          <Parameter Name="rating" Type="int" Mode="In" />
+          <Parameter Name="storeId" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="usp_AddOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="customerId" Type="int" Mode="In" />
+          <Parameter Name="orderId" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="usp_AddOrderItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderId" Type="int" Mode="In" />
+          <Parameter Name="foodItemId" Type="int" Mode="In" />
+          <Parameter Name="price" Type="money" Mode="In" />
+          <Parameter Name="quantity" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_DeleteCustomerById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="customerId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_DeleteEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Employee_Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_DeleteFoodItemById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="foodId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_DeleteFoodStoreById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="storeId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_DeleteOrderById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_EditFoodStoreDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="storeName" Type="nvarchar" Mode="In" />
+          <Parameter Name="location" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="mobileNum" Type="nvarchar" Mode="In" />
+          <Parameter Name="rating" Type="int" Mode="In" />
+          <Parameter Name="storeId" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="usp_GetFoodItemDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_GetFoodStores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_UpdateCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="customerId" Type="int" Mode="In" />
+          <Parameter Name="customerName" Type="nvarchar" Mode="In" />
+          <Parameter Name="age" Type="int" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="mobileNo" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="city" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="usp_UpdateEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Employee_Id" Type="int" Mode="In" />
+          <Parameter Name="Employee_Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Age" Type="int" Mode="In" />
+          <Parameter Name="Store_Id" Type="int" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar" Mode="In" />
+          <Parameter Name="Mobile_No" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="City" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="usp_UpdateFoodItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="foodId" Type="int" Mode="In" />
+          <Parameter Name="foodName" Type="nvarchar" Mode="In" />
+          <Parameter Name="foodType" Type="nvarchar" Mode="In" />
+          <Parameter Name="price" Type="money" Mode="In" />
+        </Function>
+        <Function Name="usp_UpdateOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderId" Type="int" Mode="In" />
+          <Parameter Name="submitStatus" Type="bit" Mode="In" />
+          <Parameter Name="foodStoreId" Type="int" Mode="In" />
+          <Parameter Name="employeeId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_UpdateOrderItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderId" Type="int" Mode="In" />
+          <Parameter Name="foodItemId" Type="int" Mode="In" />
+          <Parameter Name="quantity" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="Online_Food_Ordering_SystemModelStoreContainer">
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
@@ -356,7 +460,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Online_Food_Ordering_SystemEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Online_Food_Ordering_SystemEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Food_Items" EntityType="Self.Food_Items" />
@@ -387,13 +491,135 @@
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Order_Items" EntitySet="Order_Items" />
           </AssociationSet>
+          <FunctionImport Name="usp_AddCustomer">
+            <Parameter Name="customerName" Mode="In" Type="String" />
+            <Parameter Name="age" Mode="In" Type="Int32" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="mobileNo" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="customerId" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_AddEmployee">
+            <Parameter Name="Employee_Name" Mode="In" Type="String" />
+            <Parameter Name="Age" Mode="In" Type="Int32" />
+            <Parameter Name="Store_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Mobile_No" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+            <Parameter Name="Employee_Id" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_AddFoodItem">
+            <Parameter Name="foodName" Mode="In" Type="String" />
+            <Parameter Name="foodType" Mode="In" Type="String" />
+            <Parameter Name="price" Mode="In" Type="Decimal" />
+            <Parameter Name="foodId" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_AddFoodStoreDetails">
+            <Parameter Name="storeName" Mode="In" Type="String" />
+            <Parameter Name="location" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="mobileNum" Mode="In" Type="String" />
+            <Parameter Name="rating" Mode="In" Type="Int32" />
+            <Parameter Name="storeId" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_AddOrder">
+            <Parameter Name="customerId" Mode="In" Type="Int32" />
+            <Parameter Name="orderId" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_AddOrderItem">
+            <Parameter Name="orderId" Mode="In" Type="Int32" />
+            <Parameter Name="foodItemId" Mode="In" Type="Int32" />
+            <Parameter Name="price" Mode="In" Type="Decimal" />
+            <Parameter Name="quantity" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_DeleteCustomerById">
+            <Parameter Name="customerId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_DeleteEmployee">
+            <Parameter Name="Employee_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_DeleteFoodItemById">
+            <Parameter Name="foodId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_DeleteFoodStoreById">
+            <Parameter Name="storeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_DeleteOrderById">
+            <Parameter Name="orderId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_EditFoodStoreDetails">
+            <Parameter Name="storeName" Mode="In" Type="String" />
+            <Parameter Name="location" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="mobileNum" Mode="In" Type="String" />
+            <Parameter Name="rating" Mode="In" Type="Int32" />
+            <Parameter Name="storeId" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetFoodItemDetails" ReturnType="Collection(Online_Food_Ordering_SystemModel.usp_GetFoodItemDetails_Result)" />
+          <FunctionImport Name="usp_GetFoodStores" ReturnType="Collection(Online_Food_Ordering_SystemModel.usp_GetFoodStores_Result)" />
+          <FunctionImport Name="usp_UpdateCustomer">
+            <Parameter Name="customerId" Mode="In" Type="Int32" />
+            <Parameter Name="customerName" Mode="In" Type="String" />
+            <Parameter Name="age" Mode="In" Type="Int32" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="mobileNo" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_UpdateEmployee">
+            <Parameter Name="Employee_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Employee_Name" Mode="In" Type="String" />
+            <Parameter Name="Age" Mode="In" Type="Int32" />
+            <Parameter Name="Store_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Mobile_No" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_UpdateFoodItem">
+            <Parameter Name="foodId" Mode="In" Type="Int32" />
+            <Parameter Name="foodName" Mode="In" Type="String" />
+            <Parameter Name="foodType" Mode="In" Type="String" />
+            <Parameter Name="price" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="usp_UpdateOrder">
+            <Parameter Name="orderId" Mode="In" Type="Int32" />
+            <Parameter Name="submitStatus" Mode="In" Type="Boolean" />
+            <Parameter Name="foodStoreId" Mode="In" Type="Int32" />
+            <Parameter Name="employeeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_UpdateOrderItem">
+            <Parameter Name="orderId" Mode="In" Type="Int32" />
+            <Parameter Name="foodItemId" Mode="In" Type="Int32" />
+            <Parameter Name="quantity" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="usp_GetFoodItemDetails_Result">
+          <Property Type="Int32" Name="Food_Item_Id" Nullable="false" />
+          <Property Type="String" Name="Food_Name" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Food_Type" Nullable="false" MaxLength="255" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="DateTime" Name="Creation_Date" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="usp_GetFoodStores_Result">
+          <Property Type="Int32" Name="Food_Store_Id" Nullable="false" />
+          <Property Type="String" Name="Food_Store_Name" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Location" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="Rating" Nullable="false" />
+          <Property Type="String" Name="Mobile_No" Nullable="false" MaxLength="13" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="DateTime" Name="Creation_Date" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Online_Food_Ordering_SystemModelStoreContainer" CdmEntityContainer="Online_Food_Ordering_SystemEntities">
+        <EntityContainerMapping StorageEntityContainer="Online_Food_Ordering_SystemModelStoreContainer" CdmEntityContainer="Online_Food_Ordering_SystemEntities3">
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="Online_Food_Ordering_SystemModel.Customer">
               <MappingFragment StoreEntitySet="Customers">
@@ -479,6 +705,49 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_AddCustomer" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_AddCustomer" />
+          <FunctionImportMapping FunctionImportName="usp_AddEmployee" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_AddEmployee" />
+          <FunctionImportMapping FunctionImportName="usp_AddFoodItem" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_AddFoodItem" />
+          <FunctionImportMapping FunctionImportName="usp_AddFoodStoreDetails" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_AddFoodStoreDetails" />
+          <FunctionImportMapping FunctionImportName="usp_AddOrder" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_AddOrder" />
+          <FunctionImportMapping FunctionImportName="usp_AddOrderItem" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_AddOrderItem" />
+          <FunctionImportMapping FunctionImportName="usp_DeleteCustomerById" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_DeleteCustomerById" />
+          <FunctionImportMapping FunctionImportName="usp_DeleteEmployee" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_DeleteEmployee" />
+          <FunctionImportMapping FunctionImportName="usp_DeleteFoodItemById" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_DeleteFoodItemById" />
+          <FunctionImportMapping FunctionImportName="usp_DeleteFoodStoreById" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_DeleteFoodStoreById" />
+          <FunctionImportMapping FunctionImportName="usp_DeleteOrderById" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_DeleteOrderById" />
+          <FunctionImportMapping FunctionImportName="usp_EditFoodStoreDetails" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_EditFoodStoreDetails" />
+          <FunctionImportMapping FunctionImportName="usp_GetFoodItemDetails" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_GetFoodItemDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Online_Food_Ordering_SystemModel.usp_GetFoodItemDetails_Result">
+                <ScalarProperty Name="Food_Item_Id" ColumnName="Food_Item_Id" />
+                <ScalarProperty Name="Food_Name" ColumnName="Food_Name" />
+                <ScalarProperty Name="Food_Type" ColumnName="Food_Type" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetFoodStores" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_GetFoodStores">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Online_Food_Ordering_SystemModel.usp_GetFoodStores_Result">
+                <ScalarProperty Name="Food_Store_Id" ColumnName="Food_Store_Id" />
+                <ScalarProperty Name="Food_Store_Name" ColumnName="Food_Store_Name" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Mobile_No" ColumnName="Mobile_No" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_UpdateCustomer" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_UpdateCustomer" />
+          <FunctionImportMapping FunctionImportName="usp_UpdateEmployee" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_UpdateEmployee" />
+          <FunctionImportMapping FunctionImportName="usp_UpdateFoodItem" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_UpdateFoodItem" />
+          <FunctionImportMapping FunctionImportName="usp_UpdateOrder" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_UpdateOrder" />
+          <FunctionImportMapping FunctionImportName="usp_UpdateOrderItem" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_UpdateOrderItem" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
