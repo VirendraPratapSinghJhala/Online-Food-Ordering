@@ -467,7 +467,7 @@ Creation_Date date not null)
 -- Description:	Return the food store details
 -- =============================================
 
-CREATE PROCEDURE usp_GetFoodStore 
+CREATE PROCEDURE usp_GetFoodStores 
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -630,10 +630,10 @@ BEGIN
 	BEGIN
 	    
 	-- Insert statements for procedure here
-	INSERT INTO Customers(Customer_Name,Age,Password,Mobile_No,Email,City,IsActive,Creation_Date)
-	VALUES(@customerName,@age,@password,@mobileNo,@email,@city,1,GETDATE());
+	INSERT INTO Orders(Customer_Id,IsActive,Creation_Date)
+	VALUES(@customerId,1,GETDATE());
 	
-	SELECT @customerId=Customer_Id FROM Customers WHERE Customer_Name=@customerName and Password=@password;
+	SELECT @orderId=Order_Id FROM Orders WHERE Customer_Id=@customerId;
  
 	 END
 
@@ -680,7 +680,7 @@ BEGIN
 		BEGIN
 			UPDATE Orders 
 			SET Food_store_id=@foodStoreId, Employee_Id=@employeeId
-			WHERE Customer_Id=@customerId;
+			WHERE Order_Id=@orderId;
 		END
 
 		ELSE
@@ -792,7 +792,7 @@ GO
 -- Create date: <13th May,2020>
 -- Description:	<This is a stored procedure to update an Order Item into the Order_Items table>
 -- =============================================
-CREATE PROCEDURE usp_UpdateCustomer
+CREATE PROCEDURE usp_UpdateOrderItem
 (
 	@orderId int,
 	@foodItemId int,
