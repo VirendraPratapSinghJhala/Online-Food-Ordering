@@ -112,8 +112,8 @@
     <Content Include="Global.asax" />
     <Content Include="Models\OnlineFoodOrderModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>OnlineFoodOrderModel.Context.cs</LastGenOutput>
       <DependentUpon>OnlineFoodOrderModel.edmx</DependentUpon>
+      <LastGenOutput>OnlineFoodOrderModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\OnlineFoodOrderModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -159,6 +159,12 @@
       <DependentUpon>OnlineFoodOrderModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Order_Items.cs">
+      <DependentUpon>OnlineFoodOrderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usp_GetFoodItemDetails_Result.cs">
+      <DependentUpon>OnlineFoodOrderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usp_GetFoodStores_Result.cs">
       <DependentUpon>OnlineFoodOrderModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

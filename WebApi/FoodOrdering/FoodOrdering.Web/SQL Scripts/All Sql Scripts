@@ -34,7 +34,7 @@ CREATE PROCEDURE usp_AddCustomer
 (
 @customerName nvarchar(255),
 @age int, 
-@password money,
+@password nvarchar(255),
 @mobileNo nvarchar(255), 
 @email nvarchar(255),
 @city nvarchar(50),
@@ -80,7 +80,7 @@ CREATE PROCEDURE usp_UpdateCustomer
 @customerId int,
 @customerName nvarchar(255),
 @age int, 
-@password money,
+@password nvarchar(255),
 @mobileNo nvarchar(255), 
 @email nvarchar(255),
 @city nvarchar(50)
