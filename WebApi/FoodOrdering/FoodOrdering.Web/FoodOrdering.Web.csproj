@@ -170,9 +170,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceContracts\IEmployeeService.cs" />
-    <Compile Include="ServiceContracts\IFoodsService.cs" />
+    <Compile Include="ServiceContracts\IFoodService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
-    <Compile Include="Services\FoodsService.cs" />
+    <Compile Include="Services\FoodService.cs" />
     <Compile Include="Validations\Employee.cs" />
     <Compile Include="Validations\Food_Items.cs" />
   </ItemGroup>

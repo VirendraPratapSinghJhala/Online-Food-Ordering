@@ -146,3 +146,8 @@ Generated_Code/
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git 
+/WebApi/FoodOrdering/FoodOrdering.Web/Services/FoodService.cs
+/WebApi/FoodOrdering/FoodOrdering.Web/ServiceContracts/IFoodService.cs
+/WebApi/FoodOrdering/FoodOrdering.Web/Models/Order_Item.cs
+/WebApi/FoodOrdering/FoodOrdering.Web/Models/Food_Store.cs
+/WebApi/FoodOrdering/FoodOrdering.Web/Models/Food_Item.cs
