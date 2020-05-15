@@ -1,4 +1,5 @@
-﻿using FoodOrdering.Web.Models;
+﻿using FoodOrdering.Web.ExceptionLayer;
+using FoodOrdering.Web.Models;
 using FoodOrdering.Web.Services;
 using System;
 using System.Collections.Generic;
@@ -13,26 +14,31 @@ namespace FoodOrdering.Web.Controllers
     public class FoodController : ApiController
     {
 
-        public IHttpActionResult GetAllFoodItems()
+        public List<Food_Item> GetAllFoodItems()
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    FoodsService fs = new FoodsService();
-                    List<Food_Items> foodItemsList = fs.GetAllFoodItems();
-                    return Ok(foodItemsList);
-                }
-                catch (Exception ex)
-                {
+                    //instantiate FoodService class
+                    FoodService fs = new FoodService();
 
-                    throw ex;
+                    //Call GetAllFoodItems() to fetch all Food Items 
+                    List<Food_Item> foodItemsList = fs.GetAllFoodItems();
+
+                    //return the response
+                    return foodItemsList;
+                }
+                catch (FoodOrderException)
+                {
+                    throw ;
                 } 
             }
             
             else
             {
-                return BadRequest();
+                //throw user defined exception object 
+                throw new FoodOrderException("The entered details to fetch the Food Items are not valid");
             }
         }
           

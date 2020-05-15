@@ -557,7 +557,7 @@
             <Parameter Name="rating" Mode="In" Type="Int32" />
             <Parameter Name="storeId" Mode="InOut" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="usp_GetFoodItemDetails" ReturnType="Collection(Online_Food_Ordering_SystemModel.usp_GetFoodItemDetails_Result)" />
+          <FunctionImport Name="usp_GetFoodItemDetails" EntitySet="Food_Items" ReturnType="Collection(Online_Food_Ordering_SystemModel.Food_Item)" />
           <FunctionImport Name="usp_GetFoodStores" ReturnType="Collection(Online_Food_Ordering_SystemModel.usp_GetFoodStores_Result)" />
           <FunctionImport Name="usp_UpdateCustomer">
             <Parameter Name="customerId" Mode="In" Type="Int32" />
@@ -718,16 +718,6 @@
           <FunctionImportMapping FunctionImportName="usp_DeleteOrderById" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_DeleteOrderById" />
           <FunctionImportMapping FunctionImportName="usp_EditFoodStoreDetails" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_EditFoodStoreDetails" />
           <FunctionImportMapping FunctionImportName="usp_GetFoodItemDetails" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_GetFoodItemDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Online_Food_Ordering_SystemModel.usp_GetFoodItemDetails_Result">
-                <ScalarProperty Name="Food_Item_Id" ColumnName="Food_Item_Id" />
-                <ScalarProperty Name="Food_Name" ColumnName="Food_Name" />
-                <ScalarProperty Name="Food_Type" ColumnName="Food_Type" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="usp_GetFoodStores" FunctionName="Online_Food_Ordering_SystemModel.Store.usp_GetFoodStores">
             <ResultMapping>

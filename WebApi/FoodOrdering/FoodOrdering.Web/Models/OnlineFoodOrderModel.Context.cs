@@ -238,9 +238,14 @@ namespace FoodOrdering.Web.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_EditFoodStoreDetails", storeNameParameter, locationParameter, emailParameter, mobileNumParameter, ratingParameter, storeId);
         }
     
-        public virtual ObjectResult<usp_GetFoodItemDetails_Result> usp_GetFoodItemDetails()
+        public virtual ObjectResult<Food_Item> usp_GetFoodItemDetails()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_GetFoodItemDetails_Result>("usp_GetFoodItemDetails");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Food_Item>("usp_GetFoodItemDetails");
+        }
+    
+        public virtual ObjectResult<Food_Item> usp_GetFoodItemDetails(MergeOption mergeOption)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Food_Item>("usp_GetFoodItemDetails", mergeOption);
         }
     
         public virtual ObjectResult<usp_GetFoodStores_Result> usp_GetFoodStores()
