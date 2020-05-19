@@ -3,9 +3,8 @@
     "",
     "\\WebApi",
     "\\WebApi\\FoodOrdering",
-    "\\WebApi\\FoodOrdering\\FoodOrdering.Web",
-    "\\WebApi\\FoodOrdering\\FoodOrdering.Web\\SQL Scripts"
+    "\\WebApi\\FoodOrdering\\FoodOrdering.Web"
   ],
-  "SelectedNode": "\\WebApi\\FoodOrdering\\FoodOrdering.Web\\obj",
+  "SelectedNode": "\\WebApi\\FoodOrdering\\FoodOrdering.Web\\Validations",
   "PreviewInSolutionExplorer": false
 }
